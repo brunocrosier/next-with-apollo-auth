@@ -1,0 +1,38 @@
+type User {
+  id: ID! @id
+  firstName: String!
+  lastName: String!
+  userName: String! @unique
+  email: String! @unique
+  password: String!
+  profilePic: String! @default(value: "http://www.gravatar.com/avatar/82d947be3a59555243ebca7c494eb2ca?s=181")
+  hostedMatches: [Match!] @relation(name: "MatchToHost") @scalarList(strategy: RELATION)
+  playedMatches: [Match!] @relation(name: "MatchToPlayers") @scalarList(strategy: RELATION)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Match {
+  id: ID! @id
+  title: String!
+  description: String!
+  kickoff: DateTime!
+  duration: Int!
+  location: Location! @relation(name: "MatchToLocation")
+  maxPlayers: Int!
+  host: User! @relation(name: "MatchToHost")
+  players: [User!] @relation(name: "MatchToPlayers") @scalarList(strategy: RELATION)
+  price: Int!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Location {
+  id: ID! @id
+  coordinates: [Float!]! @scalarList(strategy: RELATION)
+  title: String! @unique
+  description: String!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  matches: [Match!] @relation(name: "MatchToLocation") @scalarList(strategy: RELATION)
+}

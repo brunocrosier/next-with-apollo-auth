@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "name": "with-apollo-auth",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@now/next"
+    }
+  ]
+}

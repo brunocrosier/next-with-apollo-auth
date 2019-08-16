@@ -1,0 +1,1208 @@
+type AggregateLocation {
+  count: Int!
+}
+
+type AggregateMatch {
+  count: Int!
+}
+
+type AggregateUser {
+  count: Int!
+}
+
+type BatchPayload {
+  count: Long!
+}
+
+scalar DateTime
+
+type Location {
+  id: ID!
+  coordinates: [Float!]!
+  title: String!
+  description: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  matches(where: MatchWhereInput, orderBy: MatchOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Match!]
+}
+
+type LocationConnection {
+  pageInfo: PageInfo!
+  edges: [LocationEdge]!
+  aggregate: AggregateLocation!
+}
+
+input LocationCreatecoordinatesInput {
+  set: [Float!]
+}
+
+input LocationCreateInput {
+  id: ID
+  coordinates: LocationCreatecoordinatesInput
+  title: String!
+  description: String!
+  matches: MatchCreateManyWithoutLocationInput
+}
+
+input LocationCreateOneWithoutMatchesInput {
+  create: LocationCreateWithoutMatchesInput
+  connect: LocationWhereUniqueInput
+}
+
+input LocationCreateWithoutMatchesInput {
+  id: ID
+  coordinates: LocationCreatecoordinatesInput
+  title: String!
+  description: String!
+}
+
+type LocationEdge {
+  node: Location!
+  cursor: String!
+}
+
+enum LocationOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  description_ASC
+  description_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type LocationPreviousValues {
+  id: ID!
+  coordinates: [Float!]!
+  title: String!
+  description: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type LocationSubscriptionPayload {
+  mutation: MutationType!
+  node: Location
+  updatedFields: [String!]
+  previousValues: LocationPreviousValues
+}
+
+input LocationSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: LocationWhereInput
+  AND: [LocationSubscriptionWhereInput!]
+  OR: [LocationSubscriptionWhereInput!]
+  NOT: [LocationSubscriptionWhereInput!]
+}
+
+input LocationUpdatecoordinatesInput {
+  set: [Float!]
+}
+
+input LocationUpdateInput {
+  coordinates: LocationUpdatecoordinatesInput
+  title: String
+  description: String
+  matches: MatchUpdateManyWithoutLocationInput
+}
+
+input LocationUpdateManyMutationInput {
+  coordinates: LocationUpdatecoordinatesInput
+  title: String
+  description: String
+}
+
+input LocationUpdateOneRequiredWithoutMatchesInput {
+  create: LocationCreateWithoutMatchesInput
+  update: LocationUpdateWithoutMatchesDataInput
+  upsert: LocationUpsertWithoutMatchesInput
+  connect: LocationWhereUniqueInput
+}
+
+input LocationUpdateWithoutMatchesDataInput {
+  coordinates: LocationUpdatecoordinatesInput
+  title: String
+  description: String
+}
+
+input LocationUpsertWithoutMatchesInput {
+  update: LocationUpdateWithoutMatchesDataInput!
+  create: LocationCreateWithoutMatchesInput!
+}
+
+input LocationWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  matches_every: MatchWhereInput
+  matches_some: MatchWhereInput
+  matches_none: MatchWhereInput
+  AND: [LocationWhereInput!]
+  OR: [LocationWhereInput!]
+  NOT: [LocationWhereInput!]
+}
+
+input LocationWhereUniqueInput {
+  id: ID
+  title: String
+}
+
+scalar Long
+
+type Match {
+  id: ID!
+  title: String!
+  description: String!
+  kickoff: DateTime!
+  duration: Int!
+  location: Location!
+  maxPlayers: Int!
+  host: User!
+  players(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  price: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type MatchConnection {
+  pageInfo: PageInfo!
+  edges: [MatchEdge]!
+  aggregate: AggregateMatch!
+}
+
+input MatchCreateInput {
+  id: ID
+  title: String!
+  description: String!
+  kickoff: DateTime!
+  duration: Int!
+  location: LocationCreateOneWithoutMatchesInput!
+  maxPlayers: Int!
+  host: UserCreateOneWithoutHostedMatchesInput!
+  players: UserCreateManyWithoutPlayedMatchesInput
+  price: Int!
+}
+
+input MatchCreateManyWithoutHostInput {
+  create: [MatchCreateWithoutHostInput!]
+  connect: [MatchWhereUniqueInput!]
+}
+
+input MatchCreateManyWithoutLocationInput {
+  create: [MatchCreateWithoutLocationInput!]
+  connect: [MatchWhereUniqueInput!]
+}
+
+input MatchCreateManyWithoutPlayersInput {
+  create: [MatchCreateWithoutPlayersInput!]
+  connect: [MatchWhereUniqueInput!]
+}
+
+input MatchCreateWithoutHostInput {
+  id: ID
+  title: String!
+  description: String!
+  kickoff: DateTime!
+  duration: Int!
+  location: LocationCreateOneWithoutMatchesInput!
+  maxPlayers: Int!
+  players: UserCreateManyWithoutPlayedMatchesInput
+  price: Int!
+}
+
+input MatchCreateWithoutLocationInput {
+  id: ID
+  title: String!
+  description: String!
+  kickoff: DateTime!
+  duration: Int!
+  maxPlayers: Int!
+  host: UserCreateOneWithoutHostedMatchesInput!
+  players: UserCreateManyWithoutPlayedMatchesInput
+  price: Int!
+}
+
+input MatchCreateWithoutPlayersInput {
+  id: ID
+  title: String!
+  description: String!
+  kickoff: DateTime!
+  duration: Int!
+  location: LocationCreateOneWithoutMatchesInput!
+  maxPlayers: Int!
+  host: UserCreateOneWithoutHostedMatchesInput!
+  price: Int!
+}
+
+type MatchEdge {
+  node: Match!
+  cursor: String!
+}
+
+enum MatchOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  description_ASC
+  description_DESC
+  kickoff_ASC
+  kickoff_DESC
+  duration_ASC
+  duration_DESC
+  maxPlayers_ASC
+  maxPlayers_DESC
+  price_ASC
+  price_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type MatchPreviousValues {
+  id: ID!
+  title: String!
+  description: String!
+  kickoff: DateTime!
+  duration: Int!
+  maxPlayers: Int!
+  price: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input MatchScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  kickoff: DateTime
+  kickoff_not: DateTime
+  kickoff_in: [DateTime!]
+  kickoff_not_in: [DateTime!]
+  kickoff_lt: DateTime
+  kickoff_lte: DateTime
+  kickoff_gt: DateTime
+  kickoff_gte: DateTime
+  duration: Int
+  duration_not: Int
+  duration_in: [Int!]
+  duration_not_in: [Int!]
+  duration_lt: Int
+  duration_lte: Int
+  duration_gt: Int
+  duration_gte: Int
+  maxPlayers: Int
+  maxPlayers_not: Int
+  maxPlayers_in: [Int!]
+  maxPlayers_not_in: [Int!]
+  maxPlayers_lt: Int
+  maxPlayers_lte: Int
+  maxPlayers_gt: Int
+  maxPlayers_gte: Int
+  price: Int
+  price_not: Int
+  price_in: [Int!]
+  price_not_in: [Int!]
+  price_lt: Int
+  price_lte: Int
+  price_gt: Int
+  price_gte: Int
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [MatchScalarWhereInput!]
+  OR: [MatchScalarWhereInput!]
+  NOT: [MatchScalarWhereInput!]
+}
+
+type MatchSubscriptionPayload {
+  mutation: MutationType!
+  node: Match
+  updatedFields: [String!]
+  previousValues: MatchPreviousValues
+}
+
+input MatchSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: MatchWhereInput
+  AND: [MatchSubscriptionWhereInput!]
+  OR: [MatchSubscriptionWhereInput!]
+  NOT: [MatchSubscriptionWhereInput!]
+}
+
+input MatchUpdateInput {
+  title: String
+  description: String
+  kickoff: DateTime
+  duration: Int
+  location: LocationUpdateOneRequiredWithoutMatchesInput
+  maxPlayers: Int
+  host: UserUpdateOneRequiredWithoutHostedMatchesInput
+  players: UserUpdateManyWithoutPlayedMatchesInput
+  price: Int
+}
+
+input MatchUpdateManyDataInput {
+  title: String
+  description: String
+  kickoff: DateTime
+  duration: Int
+  maxPlayers: Int
+  price: Int
+}
+
+input MatchUpdateManyMutationInput {
+  title: String
+  description: String
+  kickoff: DateTime
+  duration: Int
+  maxPlayers: Int
+  price: Int
+}
+
+input MatchUpdateManyWithoutHostInput {
+  create: [MatchCreateWithoutHostInput!]
+  delete: [MatchWhereUniqueInput!]
+  connect: [MatchWhereUniqueInput!]
+  set: [MatchWhereUniqueInput!]
+  disconnect: [MatchWhereUniqueInput!]
+  update: [MatchUpdateWithWhereUniqueWithoutHostInput!]
+  upsert: [MatchUpsertWithWhereUniqueWithoutHostInput!]
+  deleteMany: [MatchScalarWhereInput!]
+  updateMany: [MatchUpdateManyWithWhereNestedInput!]
+}
+
+input MatchUpdateManyWithoutLocationInput {
+  create: [MatchCreateWithoutLocationInput!]
+  delete: [MatchWhereUniqueInput!]
+  connect: [MatchWhereUniqueInput!]
+  set: [MatchWhereUniqueInput!]
+  disconnect: [MatchWhereUniqueInput!]
+  update: [MatchUpdateWithWhereUniqueWithoutLocationInput!]
+  upsert: [MatchUpsertWithWhereUniqueWithoutLocationInput!]
+  deleteMany: [MatchScalarWhereInput!]
+  updateMany: [MatchUpdateManyWithWhereNestedInput!]
+}
+
+input MatchUpdateManyWithoutPlayersInput {
+  create: [MatchCreateWithoutPlayersInput!]
+  delete: [MatchWhereUniqueInput!]
+  connect: [MatchWhereUniqueInput!]
+  set: [MatchWhereUniqueInput!]
+  disconnect: [MatchWhereUniqueInput!]
+  update: [MatchUpdateWithWhereUniqueWithoutPlayersInput!]
+  upsert: [MatchUpsertWithWhereUniqueWithoutPlayersInput!]
+  deleteMany: [MatchScalarWhereInput!]
+  updateMany: [MatchUpdateManyWithWhereNestedInput!]
+}
+
+input MatchUpdateManyWithWhereNestedInput {
+  where: MatchScalarWhereInput!
+  data: MatchUpdateManyDataInput!
+}
+
+input MatchUpdateWithoutHostDataInput {
+  title: String
+  description: String
+  kickoff: DateTime
+  duration: Int
+  location: LocationUpdateOneRequiredWithoutMatchesInput
+  maxPlayers: Int
+  players: UserUpdateManyWithoutPlayedMatchesInput
+  price: Int
+}
+
+input MatchUpdateWithoutLocationDataInput {
+  title: String
+  description: String
+  kickoff: DateTime
+  duration: Int
+  maxPlayers: Int
+  host: UserUpdateOneRequiredWithoutHostedMatchesInput
+  players: UserUpdateManyWithoutPlayedMatchesInput
+  price: Int
+}
+
+input MatchUpdateWithoutPlayersDataInput {
+  title: String
+  description: String
+  kickoff: DateTime
+  duration: Int
+  location: LocationUpdateOneRequiredWithoutMatchesInput
+  maxPlayers: Int
+  host: UserUpdateOneRequiredWithoutHostedMatchesInput
+  price: Int
+}
+
+input MatchUpdateWithWhereUniqueWithoutHostInput {
+  where: MatchWhereUniqueInput!
+  data: MatchUpdateWithoutHostDataInput!
+}
+
+input MatchUpdateWithWhereUniqueWithoutLocationInput {
+  where: MatchWhereUniqueInput!
+  data: MatchUpdateWithoutLocationDataInput!
+}
+
+input MatchUpdateWithWhereUniqueWithoutPlayersInput {
+  where: MatchWhereUniqueInput!
+  data: MatchUpdateWithoutPlayersDataInput!
+}
+
+input MatchUpsertWithWhereUniqueWithoutHostInput {
+  where: MatchWhereUniqueInput!
+  update: MatchUpdateWithoutHostDataInput!
+  create: MatchCreateWithoutHostInput!
+}
+
+input MatchUpsertWithWhereUniqueWithoutLocationInput {
+  where: MatchWhereUniqueInput!
+  update: MatchUpdateWithoutLocationDataInput!
+  create: MatchCreateWithoutLocationInput!
+}
+
+input MatchUpsertWithWhereUniqueWithoutPlayersInput {
+  where: MatchWhereUniqueInput!
+  update: MatchUpdateWithoutPlayersDataInput!
+  create: MatchCreateWithoutPlayersInput!
+}
+
+input MatchWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  kickoff: DateTime
+  kickoff_not: DateTime
+  kickoff_in: [DateTime!]
+  kickoff_not_in: [DateTime!]
+  kickoff_lt: DateTime
+  kickoff_lte: DateTime
+  kickoff_gt: DateTime
+  kickoff_gte: DateTime
+  duration: Int
+  duration_not: Int
+  duration_in: [Int!]
+  duration_not_in: [Int!]
+  duration_lt: Int
+  duration_lte: Int
+  duration_gt: Int
+  duration_gte: Int
+  location: LocationWhereInput
+  maxPlayers: Int
+  maxPlayers_not: Int
+  maxPlayers_in: [Int!]
+  maxPlayers_not_in: [Int!]
+  maxPlayers_lt: Int
+  maxPlayers_lte: Int
+  maxPlayers_gt: Int
+  maxPlayers_gte: Int
+  host: UserWhereInput
+  players_every: UserWhereInput
+  players_some: UserWhereInput
+  players_none: UserWhereInput
+  price: Int
+  price_not: Int
+  price_in: [Int!]
+  price_not_in: [Int!]
+  price_lt: Int
+  price_lte: Int
+  price_gt: Int
+  price_gte: Int
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [MatchWhereInput!]
+  OR: [MatchWhereInput!]
+  NOT: [MatchWhereInput!]
+}
+
+input MatchWhereUniqueInput {
+  id: ID
+}
+
+type Mutation {
+  createLocation(data: LocationCreateInput!): Location!
+  updateLocation(data: LocationUpdateInput!, where: LocationWhereUniqueInput!): Location
+  updateManyLocations(data: LocationUpdateManyMutationInput!, where: LocationWhereInput): BatchPayload!
+  upsertLocation(where: LocationWhereUniqueInput!, create: LocationCreateInput!, update: LocationUpdateInput!): Location!
+  deleteLocation(where: LocationWhereUniqueInput!): Location
+  deleteManyLocations(where: LocationWhereInput): BatchPayload!
+  createMatch(data: MatchCreateInput!): Match!
+  updateMatch(data: MatchUpdateInput!, where: MatchWhereUniqueInput!): Match
+  updateManyMatches(data: MatchUpdateManyMutationInput!, where: MatchWhereInput): BatchPayload!
+  upsertMatch(where: MatchWhereUniqueInput!, create: MatchCreateInput!, update: MatchUpdateInput!): Match!
+  deleteMatch(where: MatchWhereUniqueInput!): Match
+  deleteManyMatches(where: MatchWhereInput): BatchPayload!
+  createUser(data: UserCreateInput!): User!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  deleteUser(where: UserWhereUniqueInput!): User
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Query {
+  location(where: LocationWhereUniqueInput!): Location
+  locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Location]!
+  locationsConnection(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LocationConnection!
+  match(where: MatchWhereUniqueInput!): Match
+  matches(where: MatchWhereInput, orderBy: MatchOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Match]!
+  matchesConnection(where: MatchWhereInput, orderBy: MatchOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MatchConnection!
+  user(where: UserWhereUniqueInput!): User
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  node(id: ID!): Node
+}
+
+type Subscription {
+  location(where: LocationSubscriptionWhereInput): LocationSubscriptionPayload
+  match(where: MatchSubscriptionWhereInput): MatchSubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type User {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  userName: String!
+  email: String!
+  password: String!
+  profilePic: String!
+  hostedMatches(where: MatchWhereInput, orderBy: MatchOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Match!]
+  playedMatches(where: MatchWhereInput, orderBy: MatchOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Match!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type UserConnection {
+  pageInfo: PageInfo!
+  edges: [UserEdge]!
+  aggregate: AggregateUser!
+}
+
+input UserCreateInput {
+  id: ID
+  firstName: String!
+  lastName: String!
+  userName: String!
+  email: String!
+  password: String!
+  profilePic: String
+  hostedMatches: MatchCreateManyWithoutHostInput
+  playedMatches: MatchCreateManyWithoutPlayersInput
+}
+
+input UserCreateManyWithoutPlayedMatchesInput {
+  create: [UserCreateWithoutPlayedMatchesInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateOneWithoutHostedMatchesInput {
+  create: UserCreateWithoutHostedMatchesInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutHostedMatchesInput {
+  id: ID
+  firstName: String!
+  lastName: String!
+  userName: String!
+  email: String!
+  password: String!
+  profilePic: String
+  playedMatches: MatchCreateManyWithoutPlayersInput
+}
+
+input UserCreateWithoutPlayedMatchesInput {
+  id: ID
+  firstName: String!
+  lastName: String!
+  userName: String!
+  email: String!
+  password: String!
+  profilePic: String
+  hostedMatches: MatchCreateManyWithoutHostInput
+}
+
+type UserEdge {
+  node: User!
+  cursor: String!
+}
+
+enum UserOrderByInput {
+  id_ASC
+  id_DESC
+  firstName_ASC
+  firstName_DESC
+  lastName_ASC
+  lastName_DESC
+  userName_ASC
+  userName_DESC
+  email_ASC
+  email_DESC
+  password_ASC
+  password_DESC
+  profilePic_ASC
+  profilePic_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type UserPreviousValues {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  userName: String!
+  email: String!
+  password: String!
+  profilePic: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input UserScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  firstName: String
+  firstName_not: String
+  firstName_in: [String!]
+  firstName_not_in: [String!]
+  firstName_lt: String
+  firstName_lte: String
+  firstName_gt: String
+  firstName_gte: String
+  firstName_contains: String
+  firstName_not_contains: String
+  firstName_starts_with: String
+  firstName_not_starts_with: String
+  firstName_ends_with: String
+  firstName_not_ends_with: String
+  lastName: String
+  lastName_not: String
+  lastName_in: [String!]
+  lastName_not_in: [String!]
+  lastName_lt: String
+  lastName_lte: String
+  lastName_gt: String
+  lastName_gte: String
+  lastName_contains: String
+  lastName_not_contains: String
+  lastName_starts_with: String
+  lastName_not_starts_with: String
+  lastName_ends_with: String
+  lastName_not_ends_with: String
+  userName: String
+  userName_not: String
+  userName_in: [String!]
+  userName_not_in: [String!]
+  userName_lt: String
+  userName_lte: String
+  userName_gt: String
+  userName_gte: String
+  userName_contains: String
+  userName_not_contains: String
+  userName_starts_with: String
+  userName_not_starts_with: String
+  userName_ends_with: String
+  userName_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
+  profilePic: String
+  profilePic_not: String
+  profilePic_in: [String!]
+  profilePic_not_in: [String!]
+  profilePic_lt: String
+  profilePic_lte: String
+  profilePic_gt: String
+  profilePic_gte: String
+  profilePic_contains: String
+  profilePic_not_contains: String
+  profilePic_starts_with: String
+  profilePic_not_starts_with: String
+  profilePic_ends_with: String
+  profilePic_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [UserScalarWhereInput!]
+  OR: [UserScalarWhereInput!]
+  NOT: [UserScalarWhereInput!]
+}
+
+type UserSubscriptionPayload {
+  mutation: MutationType!
+  node: User
+  updatedFields: [String!]
+  previousValues: UserPreviousValues
+}
+
+input UserSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: UserWhereInput
+  AND: [UserSubscriptionWhereInput!]
+  OR: [UserSubscriptionWhereInput!]
+  NOT: [UserSubscriptionWhereInput!]
+}
+
+input UserUpdateInput {
+  firstName: String
+  lastName: String
+  userName: String
+  email: String
+  password: String
+  profilePic: String
+  hostedMatches: MatchUpdateManyWithoutHostInput
+  playedMatches: MatchUpdateManyWithoutPlayersInput
+}
+
+input UserUpdateManyDataInput {
+  firstName: String
+  lastName: String
+  userName: String
+  email: String
+  password: String
+  profilePic: String
+}
+
+input UserUpdateManyMutationInput {
+  firstName: String
+  lastName: String
+  userName: String
+  email: String
+  password: String
+  profilePic: String
+}
+
+input UserUpdateManyWithoutPlayedMatchesInput {
+  create: [UserCreateWithoutPlayedMatchesInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutPlayedMatchesInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutPlayedMatchesInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
+input UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput!
+  data: UserUpdateManyDataInput!
+}
+
+input UserUpdateOneRequiredWithoutHostedMatchesInput {
+  create: UserCreateWithoutHostedMatchesInput
+  update: UserUpdateWithoutHostedMatchesDataInput
+  upsert: UserUpsertWithoutHostedMatchesInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutHostedMatchesDataInput {
+  firstName: String
+  lastName: String
+  userName: String
+  email: String
+  password: String
+  profilePic: String
+  playedMatches: MatchUpdateManyWithoutPlayersInput
+}
+
+input UserUpdateWithoutPlayedMatchesDataInput {
+  firstName: String
+  lastName: String
+  userName: String
+  email: String
+  password: String
+  profilePic: String
+  hostedMatches: MatchUpdateManyWithoutHostInput
+}
+
+input UserUpdateWithWhereUniqueWithoutPlayedMatchesInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutPlayedMatchesDataInput!
+}
+
+input UserUpsertWithoutHostedMatchesInput {
+  update: UserUpdateWithoutHostedMatchesDataInput!
+  create: UserCreateWithoutHostedMatchesInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutPlayedMatchesInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutPlayedMatchesDataInput!
+  create: UserCreateWithoutPlayedMatchesInput!
+}
+
+input UserWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  firstName: String
+  firstName_not: String
+  firstName_in: [String!]
+  firstName_not_in: [String!]
+  firstName_lt: String
+  firstName_lte: String
+  firstName_gt: String
+  firstName_gte: String
+  firstName_contains: String
+  firstName_not_contains: String
+  firstName_starts_with: String
+  firstName_not_starts_with: String
+  firstName_ends_with: String
+  firstName_not_ends_with: String
+  lastName: String
+  lastName_not: String
+  lastName_in: [String!]
+  lastName_not_in: [String!]
+  lastName_lt: String
+  lastName_lte: String
+  lastName_gt: String
+  lastName_gte: String
+  lastName_contains: String
+  lastName_not_contains: String
+  lastName_starts_with: String
+  lastName_not_starts_with: String
+  lastName_ends_with: String
+  lastName_not_ends_with: String
+  userName: String
+  userName_not: String
+  userName_in: [String!]
+  userName_not_in: [String!]
+  userName_lt: String
+  userName_lte: String
+  userName_gt: String
+  userName_gte: String
+  userName_contains: String
+  userName_not_contains: String
+  userName_starts_with: String
+  userName_not_starts_with: String
+  userName_ends_with: String
+  userName_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
+  profilePic: String
+  profilePic_not: String
+  profilePic_in: [String!]
+  profilePic_not_in: [String!]
+  profilePic_lt: String
+  profilePic_lte: String
+  profilePic_gt: String
+  profilePic_gte: String
+  profilePic_contains: String
+  profilePic_not_contains: String
+  profilePic_starts_with: String
+  profilePic_not_starts_with: String
+  profilePic_ends_with: String
+  profilePic_not_ends_with: String
+  hostedMatches_every: MatchWhereInput
+  hostedMatches_some: MatchWhereInput
+  hostedMatches_none: MatchWhereInput
+  playedMatches_every: MatchWhereInput
+  playedMatches_some: MatchWhereInput
+  playedMatches_none: MatchWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  NOT: [UserWhereInput!]
+}
+
+input UserWhereUniqueInput {
+  id: ID
+  userName: String
+  email: String
+}

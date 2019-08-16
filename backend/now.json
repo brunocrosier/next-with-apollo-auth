@@ -1,0 +1,17 @@
+{
+    "version": 2,
+    "name": "prismatest3",
+    "builds": [
+      {
+        "src": "./index.js",
+        "use": "@now/node"
+      }
+    ],
+    "env": {
+      "APP_SECRET": "@app_secret",
+      "PRISMA_ENDPOINT": "https://dockerprismating-6e1f3cd25a.herokuapp.com/prismatest3/dev",
+      "PRISMA_SECRET": "@prisma_secret",
+      "PRODUCTION_FRONTEND_URL": "https://with-apollo-auth.brunocrosier.now.sh"
+    }
+  }
+  
