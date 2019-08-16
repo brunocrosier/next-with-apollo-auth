@@ -13,7 +13,6 @@ const NewHome = () => {
     return (
       <>
         <p>You are not signed in!</p>
-        
         {/* <p>process.env.NODE_ENV is {process.env.NODE_ENV}</p>
         <p>process.env.BACKEND_URI is {process.env.BACKEND_URI}</p> */}
         <SigninBox />
