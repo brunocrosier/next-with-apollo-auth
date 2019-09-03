@@ -8,7 +8,7 @@ let apolloClient = null
 if (typeof window === 'undefined') {
   global.fetch = fetch
 }
-function create (initialState, { getToken, fetchOptions }) {
+function create (initialState, { fetchOptions }) {
   const httpLink = createHttpLink({
     uri: process.env.NODE_ENV === "production" ? process.env.BACKEND_URI : "http://localhost:4000",
     credentials: "include",
