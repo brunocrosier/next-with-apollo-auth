@@ -4,9 +4,11 @@ import PropTypes from 'prop-types'
 import { getDataFromTree } from '@apollo/react-ssr'
 import Head from 'next/head'
 import initApollo from './init-apollo'
+
 function parseCookies (req, options = {}) {
   return cookie.parse(req ? req.headers.cookie || '' : document.cookie, options)
 }
+
 export default App => {
   return class WithData extends React.Component {
     static displayName = `WithData(${App.displayName})`
@@ -27,14 +29,17 @@ export default App => {
       )
       ctx.ctx.apolloClient = apollo
       let appProps = {}
+      
       if (App.getInitialProps) {
         appProps = await App.getInitialProps(ctx)
       }
+      
       if (res && res.finished) {
         // When redirecting, the response is finished.
         // No point in continuing to render
         return {}
       }
+      
       if (typeof window === 'undefined') {
         // Run all graphql queries in the component tree
         // and extract the resulting data
@@ -58,6 +63,7 @@ export default App => {
         // head side effect therefore need to be cleared manually
         Head.rewind()
       }
+      
       // Extract query data from the Apollo's store
       const apolloState = apollo.cache.extract()
       return {
@@ -65,6 +71,7 @@ export default App => {
         apolloState
       }
     }
+  
     constructor (props) {
       super(props)
       // `getDataFromTree` renders the component first, the client is passed off as a property.
@@ -75,6 +82,7 @@ export default App => {
         }
       })
     }
+  
     render () {
       return <App {...this.props} apolloClient={this.apolloClient} />
     }
