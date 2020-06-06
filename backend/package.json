@@ -8,7 +8,7 @@
   "main": "index.js",
   "dependencies": {
     "apollo-link-context": "^1.0.18",
-    "apollo-server-core": "^2.6.8",
+    "apollo-server-core": "^2.14.2",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
